@@ -2,14 +2,19 @@ package testes;
 
 import ij.ImagePlus;
 import ij.gui.ImageCanvas;
+import ij.process.ByteProcessor;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  * Lendo imagem ruidosa e extraindo o objeto
@@ -73,9 +78,73 @@ public class SegRdI extends JFrame {
     }
 
     private void abrirActionPerformed(ActionEvent evt) {
+        JFileChooser dialogo = new JFileChooser();
+        dialogo.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int result = dialogo.showOpenDialog(this);
+        if (result == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
+
+        fileName = dialogo.getSelectedFile();
+
+        if (fileName == null || fileName.getName().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nome de Arquivo Inválido",
+                    "Nome de Arquivo Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        imagemIJ = new ImagePlus(fileName.toString());
+        JScrollPane sp = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        ImageCanvas ic = new ImageCanvas(imagemIJ);
+        sp.add(ic);
+        sp.setSize(imagemIJ.getWidth(), imagemIJ.getHeight());
+        painelPrinc.add(sp, BorderLayout.CENTER);
     }
 
     private void processarActionPerformed(ActionEvent evt) {
+        Image image = imagemIJ.getImage();
+        ByteProcessor byteProc = new ByteProcessor(image);
+        byteProc.medianFilter();
+        image = byteProc.createImage();
+        ImagePlus imFilt = new ImagePlus("filtragem", image);
+
+        int max = -1;
+        for (int lin = 0; lin < imFilt.getHeight(); lin++) {
+            for (int col = 0; col < imFilt.getWidth(); col++) {
+                int[] pixels = imFilt.getPixel(col, lin);
+                if (pixels[0] > max) {
+                    max = pixels[0];
+                }
+            }
+        }
+        image = imFilt.getImage();
+        byteProc = new ByteProcessor(image);
+
+        byteProc.threshold(max - 1);
+        image = byteProc.createImage();
+        ImagePlus imSeg = new ImagePlus("segmentacao", image);
+        image = imSeg.getImage();
+        byteProc = new ByteProcessor(image);
+
+        byteProc.dilate(1,0);
+        image = byteProc.createImage();
+        ImagePlus imDil = new ImagePlus("dilatacao", image);
+        image = imDil.getImage();
+        byteProc = new ByteProcessor(image);
+
+        byteProc.erode(1,0);
+        image = byteProc.createImage();
+        ImagePlus imErosao = new ImagePlus("erosao", image);
+        JScrollPane sp = new JScrollPane(
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        ImageCanvas ic = new ImageCanvas(imErosao);
+        //ImageCanvas ic = new ImageCanvas(imagemIJ);
+        sp.add(ic);
+        sp.setSize(imErosao.getWidth(), imErosao.getHeight());
+        painelPrinc.removeAll();
+        painelPrinc.add(sp, BorderLayout.CENTER);
+
     }
 
     private void limparActionPerformed(ActionEvent evt) {
