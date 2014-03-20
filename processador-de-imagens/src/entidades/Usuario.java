@@ -2,9 +2,9 @@ package entidades;
 
 import java.io.Serializable;
 
+public class Usuario implements Serializable {
 
-public class Usuario implements Serializable{
-
+    private int cod;
     private String username;
     private String senha;
     private boolean admin;
@@ -31,5 +31,13 @@ public class Usuario implements Serializable{
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public int getCod() {
+        return cod;
+    }
+
+    public void setCod(int cod) {
+        this.cod = cod;
     }
 }
