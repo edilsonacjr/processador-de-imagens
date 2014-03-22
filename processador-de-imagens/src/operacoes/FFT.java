@@ -1,10 +1,10 @@
-package opercoes;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package operacoes;
+
 /**
  *
  * @author josepedro
@@ -12,23 +12,53 @@ package opercoes;
 import java.lang.Math.*;
 import java.awt.*;
 
-public class InverseFFT {
+public class FFT {
 
+    /**
+     * Data structure to hold the input to the algorithm.
+     */
+    public TwoDArray input;
+    /**
+     * Data structure to hold the intermediate results of the algorithm. After
+     * applying the 1D FFT to the columns but before the rows.
+     */
+    public TwoDArray intermediate;
+    /**
+     * Data structure to hold the ouput of the algorithm.
+     */
+    public TwoDArray output;
     public int progress;
 
     /**
      * Default no argument constructor.
      */
-    public InverseFFT() {
+    public FFT() {
     }
 
     /**
-     * Recursively applies the 1D inverse FFT algorithm.
+     * Constructor to set up an FFT object and then automatically apply the FFT
+     * algorithm.
      *
-     * @param x ComplexNumber array containing the input to the 1D inverse FFT.
-     * @return ComplexNumber array containing the result of the 1D inverse FFT.
+     * @param pixels int array containing the image data.
+     * @param w The width of the image in pixels.
+     * @param h The height of the image in pixels.
      */
-    public ComplexNumber[] recursiveInverseFFT(ComplexNumber[] x) {
+    public FFT(int[] pixels, int w, int h) {
+        progress = 0;
+        input = new TwoDArray(pixels, w, h);
+        intermediate = new TwoDArray(pixels, w, h);
+        output = new TwoDArray(pixels, w, h);
+        transform();
+    }
+
+    /**
+     * Method to recursively apply the 1D FFT to a ComplexNumber array.
+     *
+     * @param x A ComplexNumber array containing a row or a column of image
+     * data.
+     * @return A ComplexNumber array containing the result of the 1D FFT.
+     */
+    static ComplexNumber[] recursiveFFT(ComplexNumber[] x) {
         ComplexNumber z1, z2, z3, z4, tmp, cTwo;
         int n = x.length;
         int m = n / 2;
@@ -41,7 +71,7 @@ public class InverseFFT {
         if (n == 1) {
             result[0] = x[0];
         } else {
-            z1 = new ComplexNumber(0.0, 2 * (Math.PI) / n);
+            z1 = new ComplexNumber(0.0, -2 * (Math.PI) / n);
             tmp = ComplexNumber.cExp(z1);
             z1 = new ComplexNumber(1.0, 0.0);
             for (int i = 0; i < m; ++i) {
@@ -55,8 +85,8 @@ public class InverseFFT {
                 z2 = ComplexNumber.cMult(z1, tmp);
                 z1 = new ComplexNumber(z2);
             }
-            even = recursiveInverseFFT(sum);
-            odd = recursiveInverseFFT(diff);
+            even = recursiveFFT(sum);
+            odd = recursiveFFT(diff);
 
             for (int i = 0; i < m; ++i) {
                 result[i * 2] = new ComplexNumber(even[i]);
@@ -67,60 +97,47 @@ public class InverseFFT {
     }
 
     /**
-     * Takes a TwoDArray, applies the 2D inverse FFT to the input by applying
-     * the 1D inverse FFT to each column and then each row in turn.
-     *
-     * @param input TwoDArray containing the input image data.
-     * @return TwoDArray containing the new image data.
+     * Method to apply the 2D FFT by applying the recursive 1D FFT to the
+     * columns and then the rows of image data.
      */
-    public TwoDArray transform(TwoDArray input) {
-        progress = 0;
-        TwoDArray intermediate = new TwoDArray(input.width, input.height);
-        TwoDArray output = new TwoDArray(input.width, input.height);
+    void transform() {
 
         for (int i = 0; i < input.size; ++i) {
             progress++;
-            intermediate.putColumn(i, recursiveInverseFFT(input.getColumn(i)));
+            intermediate.putColumn(i, recursiveFFT(input.getColumn(i)));
         }
-
         for (int i = 0; i < intermediate.size; ++i) {
             progress++;
-            output.putRow(i, recursiveInverseFFT(intermediate.getRow(i)));
+            output.putRow(i, recursiveFFT(intermediate.getRow(i)));
         }
-        return output;
+        for (int j = 0; j < output.values.length; ++j) {
+            for (int i = 0; i < output.values[0].length; ++i) {
+                intermediate.values[i][j] = output.values[i][j];
+                input.values[i][j] = output.values[i][j];
+            }
+        }
     }
 
-    public int[] getPixels(TwoDArray output) {
-        double[] outputArrayDoubles
-                = new double[output.width * output.height];
-        outputArrayDoubles = output.getReal();
-        //outputArrayDoubles = fft.output.getMagnitude();
-        int[] outputArray = new int[outputArrayDoubles.length];
-        //outputArray = ImageMods.toPixels(outputArrayDoubles);
-        outputArray
-                = toPixels(allPositive(outputArrayDoubles));
-
-        return outputArray;
+    public int[] getPixels() {
+        return toPixels(logs(intermediate.DCToCentre(intermediate.getMagnitude())));
     }
 
     /**
-     * Method to slide and scale an array of doubles so that the minimum values
-     * is 0 (all positive).
+     * A method to convert an array of doubles to an array of their log values.
      *
-     * @param values An array of doubles.
-     * @return An array of positive doubles.
+     * @param values An array of doubles (all positive).
+     * @return An array of doubles.
      */
-    private double[] allPositive(double[] values) {
+    private double[] logs(double[] values) {
         double[] output = new double[values.length];
-        double m = minValue(values);
-        if (m < 0) {
-            for (int i = 0; i < values.length; ++i) {
-                output[i] = values[i] - m;
-            }
-            return output;
-        } else {
-            return values;
+        for (int i = 0; i < values.length; ++i) {
+            values[i] = values[i] * 10000;
         }
+        double c = 255 / Math.log(1 + maxValue(values));
+        for (int i = 0; i < values.length; ++i) {
+            output[i] = c * Math.log(1 + values[i]);
+        }
+        return output;
     }
 
     /**
@@ -191,4 +208,5 @@ public class InverseFFT {
     public int getProgress() {
         return progress;
     }
+
 }

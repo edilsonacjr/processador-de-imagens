@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package opercoes;
+package operacoes;
 
 /**
  *
@@ -24,7 +24,7 @@ import javax.swing.JApplet;
 import javax.imageio.*;
 import java.util.Arrays;
 
-public class AverageFilter {
+public class MedianFilter {
 
     int[] input;
     int[] output;
@@ -35,7 +35,7 @@ public class AverageFilter {
     int height;
     int tamOutput;
 
-    public void averageFilter() {
+    public void medianFilter() {
         progress = 0;
     }
 
@@ -48,35 +48,35 @@ public class AverageFilter {
         template = new float[templateSize * templateSize];
         input = original;
         tamOutput = tamOutputIn;
-        
     }
 
     public int[] process() {
         float sum;
         progress = 0;
-        int val = 0; // value of all the pixels in the kernel area
+        int vals[];
         int count;
         int outputsmaller[] = new int[(width - (templateSize - 1)) * (height - (templateSize - 1))];
 
         for (int x = (templateSize - 1) / 2; x < width - (templateSize + 1) / 2; x++) {
             progress++;
             for (int y = (templateSize - 1) / 2; y < height - (templateSize + 1) / 2; y++) {
-
+                vals = new int[templateSize * templateSize];
                 count = 0;
-                val = 0;
                 for (int x1 = x - ((templateSize - 1) / 2); x1 < x + ((templateSize + 1) / 2); x1++) {
                     for (int y1 = y - ((templateSize - 1) / 2); y1 < y + ((templateSize + 1) / 2); y1++) {
-                        val += ((input[y1 * width + x1] & 0xff) / (templateSize * templateSize));
+                        vals[count] = input[y1 * width + x1] & 0xff;
                         count++;
                     }
                 }
-                outputsmaller[(y - (templateSize - 1) / 2) * (width - (templateSize - 1)) + (x - (templateSize - 1) / 2)] = 0xff000000 | ((int) (val) << 16 | (int) (val) << 8 | (int) (val));
+                java.util.Arrays.sort(vals);
+                int middle = vals[((templateSize * templateSize + 1) / 2)];
+                outputsmaller[(y - (templateSize - 1) / 2) * (width - (templateSize - 1)) + (x - (templateSize - 1) / 2)] = 0xff000000 | (middle << 16 | middle << 8 | middle);
             }
         }
 
         Toolkit tk = Toolkit.getDefaultToolkit();
 
-        Image tempImage = tk.createImage(new MemoryImageSource((width - (templateSize - 1)), (height - (templateSize - 1)), outputsmaller, 0, (width - (templateSize - 1)))).getScaledInstance(tamOutput, height/(width/tamOutput), Image.SCALE_SMOOTH);
+        Image tempImage = tk.createImage(new MemoryImageSource((width - (templateSize - 1)), (height - (templateSize - 1)), outputsmaller, 0, (width - (templateSize - 1)))).getScaledInstance(tamOutput, height/(width/tamOutput),Image.SCALE_SMOOTH);
         PixelGrabber grabber = new PixelGrabber(tempImage, 0, 0, width, height, output, 0, width);
         try {
             grabber.grabPixels();
