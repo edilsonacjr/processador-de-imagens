@@ -1,9 +1,9 @@
 package servidor;
 
-import rmi.InterfaceRmiImp;
-import rmi.InterfaceRmi;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import rmi.InterfaceRmi;
+import rmi.InterfaceRmiImp;
 
 public class Servidor {
     public static void main(String args[]) {

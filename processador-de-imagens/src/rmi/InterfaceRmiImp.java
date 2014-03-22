@@ -28,9 +28,11 @@ import operacoes.TwoDArray;
  *
  * @author Edilson Anselmo Corrêa Júnior
  */
-public class InterfaceRmiImp implements InterfaceRmi {
+public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi {
 
-    @Override
+    public InterfaceRmiImp() throws RemoteException {
+    }
+
     public boolean validaUsuario(String username, String senha) throws RemoteException {
         UsuarioDao dao;
         Usuario u = new Usuario();
