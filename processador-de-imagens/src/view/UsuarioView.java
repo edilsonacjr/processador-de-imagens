@@ -4,6 +4,12 @@
  */
 package view;
 
+import dao.UsuarioDao;
+import entidades.Usuario;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,13 +23,31 @@ public class UsuarioView extends javax.swing.JFrame {
      * Creates new form UsuarioView
      */
     public UsuarioView() {
-                String[] columnNames = {"Username"};
-        String[][] data = { {"teste"} };
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        jtbUsername = new JTable(model);
-        System.out.println("oi");
         initComponents();
+        try {
+            updateT();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    @SuppressWarnings("empty-statement")
+    public void updateT() throws SQLException {
+        UsuarioDao dao = new UsuarioDao();
+        ArrayList<Usuario> us = dao.getLista();
+        String[][] data = new String[us.size()][2];
+        ArrayList<String> usernames = new ArrayList<>();
+        int i = 0;
+        for (Usuario u : us) {
+            //usernames.add(u.getUsername());
+            data[i][0] = u.getUsername();
+            data[i][1] = u.isAdmin() ? "Sim" : "Não";
+            i++;
+        }
+
+        String[] columnNames = {"Username", "Admin"};
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        jtbUsername.setModel(model);
     }
 
     /**
@@ -41,7 +65,7 @@ public class UsuarioView extends javax.swing.JFrame {
         jbtRemover = new javax.swing.JButton();
         jbtSair = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuários");
 
         jtbUsername.setModel(new javax.swing.table.DefaultTableModel(
@@ -49,31 +73,31 @@ public class UsuarioView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Username"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(jtbUsername);
 
         jbtAdicionar.setText("Adicionar");
+        jbtAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAdicionarActionPerformed(evt);
+            }
+        });
 
         jbtRemover.setText("Remover");
+        jbtRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoverActionPerformed(evt);
+            }
+        });
 
         jbtSair.setText("Sair");
+        jbtSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,9 +109,8 @@ public class UsuarioView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jbtSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jbtAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jbtAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -107,6 +130,36 @@ public class UsuarioView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jbtSairActionPerformed
+
+    private void jbtAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAdicionarActionPerformed
+        new UsuarioCad(this).setVisible(true);
+    }//GEN-LAST:event_jbtAdicionarActionPerformed
+
+    private void jbtRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoverActionPerformed
+        if(jtbUsername.getSelectedRow() == -1)
+            return;
+        UsuarioDao dao;
+        try {
+            dao = new UsuarioDao();
+            ArrayList<Usuario> us = dao.getLista();
+            String username = (String) jtbUsername.getValueAt(jtbUsername.getSelectedRow(), 0);
+            for(Usuario u : us){
+                if(username.equals(u.getUsername())){
+                    dao.remove(u);
+                    updateT();
+                    return;
+                }
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jbtRemoverActionPerformed
 
     /**
      * @param args the command line arguments

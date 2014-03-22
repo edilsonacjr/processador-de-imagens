@@ -33,7 +33,7 @@ public class UsuarioDao {
     }
 
     public ArrayList<Usuario> getLista() throws SQLException {
-        String sql = "select * from autor";
+        String sql = "select * from usuario";
         PreparedStatement stmt = this.conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
 
@@ -64,7 +64,7 @@ public class UsuarioDao {
         stmt.close();
     }
     public boolean valida(Usuario u) throws SQLException{
-        String sql = "select from usuario where senha like ? and username like ?";
+        String sql = "select * from usuario where senha like ? and username like ?";
         PreparedStatement stmt = this.conexao.prepareStatement(sql);
         
         stmt.setString(1, u.getSenha());

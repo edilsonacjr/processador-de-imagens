@@ -4,19 +4,31 @@
  */
 package view;
 
+import dao.UsuarioDao;
+import entidades.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author edilson
  */
 public class Login extends javax.swing.JFrame {
-
+    private Principal p;
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
     }
-
+    public Login(Principal p) {
+        this.p = p;
+        initComponents();
+        this.requestFocus();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,8 +59,18 @@ public class Login extends javax.swing.JFrame {
         });
 
         jbtEntrar.setText("Entrar");
+        jbtEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtEntrarActionPerformed(evt);
+            }
+        });
 
         jbtCancelar.setText("Cancelar");
+        jbtCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,6 +118,28 @@ public class Login extends javax.swing.JFrame {
     private void jtfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfUsuarioActionPerformed
+
+    private void jbtEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEntrarActionPerformed
+        UsuarioDao dao;
+        Usuario u = new Usuario();
+        u.setUsername(jtfUsuario.getText());
+        u.setSenha(jtfSenha.getText());
+        try {
+            dao = new UsuarioDao();
+            if(dao.valida(u)){
+                p.setEnabled(true);
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Usuário ou senha inválido!");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbtEntrarActionPerformed
+
+    private void jbtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jbtCancelarActionPerformed
 
     /**
      * @param args the command line arguments

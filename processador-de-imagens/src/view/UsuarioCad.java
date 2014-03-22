@@ -16,11 +16,15 @@ import javax.swing.JOptionPane;
  * @author edilson
  */
 public class UsuarioCad extends javax.swing.JFrame {
-
+    private UsuarioView uv;
     /**
      * Creates new form UsuarioCad
      */
     public UsuarioCad() {
+        initComponents();
+    }
+    public UsuarioCad(UsuarioView uv) {
+        this.uv = uv;
         initComponents();
     }
 
@@ -136,9 +140,11 @@ public class UsuarioCad extends javax.swing.JFrame {
         try {
             dao = new UsuarioDao();
             dao.adiciona(u);
+            uv.updateT();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Todos os itens devem ser preenchidos!");   
-        }
+            JOptionPane.showMessageDialog(null, "Usuário já cadastrado!");
+            return;
+        }  
         this.dispose();
     }//GEN-LAST:event_jbtCadastrarActionPerformed
 
