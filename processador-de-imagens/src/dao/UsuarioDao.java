@@ -20,14 +20,13 @@ public class UsuarioDao {
     }
 
     public void adiciona(Usuario item) throws SQLException {
-        String sql = "insert into usuario values (?,?,?,?)";
+        String sql = "insert into usuario(username, senha, admin) values (?,?,?)";
 
         PreparedStatement stmt = this.conexao.prepareCall(sql);
 
         stmt.setString(1, item.getUsername());
-        stmt.setInt(2, item.getCod());
-        stmt.setString(3, item.getSenha());
-        stmt.setBoolean(4, item.isAdmin());
+        stmt.setString(2, item.getSenha());
+        stmt.setBoolean(3, item.isAdmin());
 
         stmt.execute();
         stmt.close();

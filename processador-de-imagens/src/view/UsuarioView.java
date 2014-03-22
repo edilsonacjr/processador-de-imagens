@@ -4,6 +4,9 @@
  */
 package view;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author edilson
@@ -14,7 +17,13 @@ public class UsuarioView extends javax.swing.JFrame {
      * Creates new form UsuarioView
      */
     public UsuarioView() {
+                String[] columnNames = {"Username"};
+        String[][] data = { {"teste"} };
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        jtbUsername = new JTable(model);
+        System.out.println("oi");
         initComponents();
+
     }
 
     /**
