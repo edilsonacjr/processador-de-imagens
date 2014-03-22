@@ -14,12 +14,13 @@ import java.util.ArrayList;
  * @author Edilson Anselmo Corrêa Júnior
  */
 public class ImagemDao {
+
     private Connection conexao;
 
     public ImagemDao() throws SQLException {
         conexao = ConexaoJDBC.getConexao();
     }
-    
+
     public void adiciona(Imagem item) throws SQLException {
         String sql = "insert into imagem(nome, imagem, usuario, processamento) values (?,?,?,?)";
 
@@ -28,7 +29,7 @@ public class ImagemDao {
         stmt.setString(1, item.getNome());
         stmt.setBlob(2, item.getImagem());
         stmt.setInt(3, item.getUsuario());
-        stmt.setString(3, item.getProcessamento());
+        stmt.setString(4, item.getProcessamento());
 
         stmt.execute();
         stmt.close();
@@ -41,23 +42,24 @@ public class ImagemDao {
         ResultSet rs = stmt.executeQuery();
 
         ArrayList<Imagem> itens = new ArrayList<Imagem>();
-        
+
         while (rs.next()) {
             Imagem p = new Imagem();
 
             p.setNome(rs.getString("nome"));
             p.setCod(rs.getInt("cod"));
-            p.setImagem((InputStream) rs.getBlob("imagem"));
+            p.setImagem((InputStream) rs.getBinaryStream("imagem"));
             p.setProcessamento(rs.getString("processamento"));
             p.setUsuario(rs.getInt("usuario"));
 
             itens.add(p);
         }
-        
+
         rs.close();
         stmt.close();
         return itens;
     }
+
     public void remove(Imagem u) throws SQLException {
         String sql = "delete from imagem where cod=?";
         PreparedStatement stmt = this.conexao.prepareStatement(sql);
@@ -66,5 +68,27 @@ public class ImagemDao {
 
         stmt.execute();
         stmt.close();
+    }
+
+    public Imagem getImagem(int i) throws SQLException {
+        String sql = "select * from imagem where cod=?";
+        PreparedStatement stmt = this.conexao.prepareStatement(sql);
+        stmt.setInt(1, i);
+        ResultSet rs = stmt.executeQuery();
+
+        ArrayList<Imagem> itens = new ArrayList<Imagem>();
+
+        rs.next();
+        Imagem p = new Imagem();
+
+        p.setNome(rs.getString("nome"));
+        p.setCod(rs.getInt("cod"));
+        p.setImagem((InputStream) rs.getBinaryStream("imagem"));
+        p.setProcessamento(rs.getString("processamento"));
+        p.setUsuario(rs.getInt("usuario"));
+
+        rs.close();
+        stmt.close();
+        return p;
     }
 }

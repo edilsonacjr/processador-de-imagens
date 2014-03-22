@@ -39,7 +39,6 @@ public class UsuarioView extends javax.swing.JFrame {
         ArrayList<String> usernames = new ArrayList<>();
         int i = 0;
         for (Usuario u : us) {
-            //usernames.add(u.getUsername());
             data[i][0] = u.getUsername();
             data[i][1] = u.isAdmin() ? "Sim" : "Não";
             i++;

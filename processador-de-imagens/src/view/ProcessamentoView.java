@@ -6,12 +6,14 @@
 
 package view;
 
+import entidades.Imagem;
+
 /**
  *
  * @author edilson
  */
 public class ProcessamentoView extends javax.swing.JFrame {
-
+    private Imagem imagem;
     /**
      * Creates new form ProcessamentoView
      */

@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author Edilson Anselmo Corrêa Júnior
  */
 public class UsuarioDao {
+
     private Connection conexao;
 
     public UsuarioDao() throws SQLException {
@@ -38,7 +39,7 @@ public class UsuarioDao {
         ResultSet rs = stmt.executeQuery();
 
         ArrayList<Usuario> itens = new ArrayList<Usuario>();
-        
+
         while (rs.next()) {
             Usuario p = new Usuario();
 
@@ -49,11 +50,12 @@ public class UsuarioDao {
 
             itens.add(p);
         }
-        
+
         rs.close();
         stmt.close();
         return itens;
     }
+
     public void remove(Usuario u) throws SQLException {
         String sql = "delete from usuario where cod=?";
         PreparedStatement stmt = this.conexao.prepareStatement(sql);
@@ -63,17 +65,40 @@ public class UsuarioDao {
         stmt.execute();
         stmt.close();
     }
-    public boolean valida(Usuario u) throws SQLException{
+
+    public boolean valida(Usuario u) throws SQLException {
         String sql = "select * from usuario where senha like ? and username like ?";
         PreparedStatement stmt = this.conexao.prepareStatement(sql);
-        
+
         stmt.setString(1, u.getSenha());
         stmt.setString(2, u.getUsername());
-        
+
         ResultSet rs = stmt.executeQuery();
-        
-        if (rs.next())
+
+        if (rs.next()) {
             return true;
+        }
         return false;
+    }
+
+    public Usuario getUsuario(String username, String senha) throws SQLException {
+        String sql = "select * from usuario where username like ? and senha like ?";
+        PreparedStatement stmt = this.conexao.prepareStatement(sql);
+        stmt.setString(1, username);
+        stmt.setString(2, senha);
+        ResultSet rs = stmt.executeQuery();
+
+        rs.next();
+        Usuario p = new Usuario();
+
+        p.setUsername(rs.getString("username"));
+        p.setCod(rs.getInt("cod"));
+        p.setSenha(rs.getString("senha"));
+        p.setAdmin(rs.getBoolean("admin"));
+
+
+        rs.close();
+        stmt.close();
+        return p;
     }
 }

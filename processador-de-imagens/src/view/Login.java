@@ -4,9 +4,8 @@
  */
 package view;
 
-import dao.UsuarioDao;
+
 import entidades.Usuario;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -120,19 +119,20 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfUsuarioActionPerformed
 
     private void jbtEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEntrarActionPerformed
-        UsuarioDao dao;
         Usuario u = new Usuario();
         u.setUsername(jtfUsuario.getText());
         u.setSenha(jtfSenha.getText());
         try {
-            dao = new UsuarioDao();
-            if(dao.valida(u)){
+            if(p.servico.validaUsuario(jtfUsuario.getText(), jtfSenha.getText())){
+                u = p.servico.getUsuario(jtfUsuario.getText(), jtfSenha.getText());
+                p.setUsuario(u);
                 p.setEnabled(true);
+                p.updateT();
                 this.dispose();
             }else{
                 JOptionPane.showMessageDialog(null, "Usuário ou senha inválido!");
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbtEntrarActionPerformed

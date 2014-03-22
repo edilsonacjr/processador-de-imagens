@@ -1,11 +1,16 @@
 package rmi;
 
+import dao.UsuarioDao;
+import entidades.Usuario;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import operacoes.AverageFilter;
 import operacoes.CondimentNoise;
@@ -26,8 +31,35 @@ import operacoes.TwoDArray;
 public class InterfaceRmiImp implements InterfaceRmi {
 
     @Override
-    public boolean validaUsuario() throws RemoteException {
-        return true;
+    public boolean validaUsuario(String username, String senha) throws RemoteException {
+        UsuarioDao dao;
+        Usuario u = new Usuario();
+        u.setUsername(username);
+        u.setSenha(senha);
+        try {
+            dao = new UsuarioDao();
+            if (dao.valida(u)) {
+                return true;
+            }
+        } catch (SQLException ex) {
+
+        }
+        return false;
+    }
+
+    public Usuario getUsuario(String username, String senha) throws RemoteException {
+        UsuarioDao dao;
+        Usuario u = new Usuario();
+        u.setUsername(username);
+        u.setSenha(senha);
+        try {
+            dao = new UsuarioDao();
+            u = dao.getUsuario(username, senha);
+            return u;
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return u;
     }
 
     public Image averaging(Image image, int noise, String noiseMode, int templateSize, int tamOutput) {
@@ -58,7 +90,7 @@ public class InterfaceRmiImp implements InterfaceRmi {
 
         filter.init(orig, width, height, templateSize, tamOutput);
         Toolkit tk = Toolkit.getDefaultToolkit();
-        Image output = tk.createImage(new MemoryImageSource(width, height, filter.process(), 0, width)).getScaledInstance(tamOutput, height/(width/tamOutput), Image.SCALE_SMOOTH);
+        Image output = tk.createImage(new MemoryImageSource(width, height, filter.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
 
         return output;
     }
@@ -98,7 +130,7 @@ public class InterfaceRmiImp implements InterfaceRmi {
 
         fft.intermediate = FreqFilter.filter(fft.intermediate, lowpass, radius);
         TwoDArray output = inverse.transform(fft.intermediate);
-        Image invFourier = tk.createImage(new MemoryImageSource(width, height, inverse.getPixels(output), 0, output.width)).getScaledInstance(tamOutput, height/(width/tamOutput), Image.SCALE_SMOOTH);
+        Image invFourier = tk.createImage(new MemoryImageSource(width, height, inverse.getPixels(output), 0, output.width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
 
         return invFourier;
     }
@@ -130,9 +162,9 @@ public class InterfaceRmiImp implements InterfaceRmi {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image output;
         if (noiseMode.equals("Gaussian")) {
-            output = tk.createImage(new MemoryImageSource(width, height, gNoise.process(), 0, width)).getScaledInstance(tamOutput, height/(width/tamOutput), Image.SCALE_SMOOTH);
+            output = tk.createImage(new MemoryImageSource(width, height, gNoise.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
         } else {
-            output = tk.createImage(new MemoryImageSource(width, height, cNoise.process(), 0, width)).getScaledInstance(tamOutput, height/(width/tamOutput), Image.SCALE_SMOOTH);
+            output = tk.createImage(new MemoryImageSource(width, height, cNoise.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
         }
 
         return output;
@@ -166,7 +198,7 @@ public class InterfaceRmiImp implements InterfaceRmi {
 
         filter.init(orig, width, height, templateSize, tamOutput);
         Toolkit tk = Toolkit.getDefaultToolkit();
-        Image output = tk.createImage(new MemoryImageSource(width, height, filter.process(), 0, width)).getScaledInstance(tamOutput, height/(width/tamOutput), Image.SCALE_SMOOTH);
+        Image output = tk.createImage(new MemoryImageSource(width, height, filter.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
 
         return output;
     }
@@ -210,7 +242,7 @@ public class InterfaceRmiImp implements InterfaceRmi {
         }
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image output = tk.createImage(new MemoryImageSource(width, height, orig, 0, width));
-        output = output.getScaledInstance(tamOutput, height/(width/tamOutput), Image.SCALE_SMOOTH);
+        output = output.getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
         //Image output = tk.createImage(new MemoryImageSource(tamOutput, height / (width / tamOutput), edgedetector.process(), 0, width));
         return output;
     }
