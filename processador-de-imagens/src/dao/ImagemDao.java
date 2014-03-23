@@ -2,11 +2,17 @@ package dao;
 
 import banco.ConexaoJDBC;
 import entidades.Imagem;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -18,6 +24,10 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 /**
  *
@@ -39,13 +49,18 @@ public class ImagemDao {
         stmt.setString(1, item.getNome());
 
         Image image = item.getImagem().getImage();
-        BufferedImage bImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
-        //ImageIO
+        BufferedImage bImage = new BufferedImage(image.getWidth(null),
+                image.getHeight(null),
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = bImage.createGraphics();
+        g2.drawImage(image, 0, 0,null);
+        g2.dispose();
 
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        //ImageIO.write(bImage,bImage.getType(), os);
-        
-        InputStream is = (InputStream) ImageIO.createImageInputStream(image);//new ByteArrayInputStream(os.toByteArray());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bImage, "png", baos);
+        byte[] res = baos.toByteArray();
+
+        InputStream is = new ByteArrayInputStream(res);
 
         stmt.setBlob(2, is);
         stmt.setInt(3, item.getUsuario());
@@ -53,6 +68,7 @@ public class ImagemDao {
 
         stmt.execute();
         stmt.close();
+
     }
 
     public ArrayList<Imagem> getLista(int i) throws SQLException, IOException {
@@ -68,8 +84,9 @@ public class ImagemDao {
 
             p.setNome(rs.getString("nome"));
             p.setCod(rs.getInt("cod"));
-            if(rs.getBinaryStream("imagem")!=null)
+            if (rs.getBinaryStream("imagem") != null) {
                 p.setImagem(new ImageIcon(ImageIO.read((InputStream) rs.getBinaryStream("imagem"))));
+            }
             p.setProcessamento(rs.getString("processamento"));
             p.setUsuario(rs.getInt("usuario"));
 

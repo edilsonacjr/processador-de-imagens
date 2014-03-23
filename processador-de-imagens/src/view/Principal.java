@@ -271,7 +271,7 @@ public class Principal extends javax.swing.JFrame {
             this.servico.inserirImagem(i);
             updateT();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println(ex);
         }
     }//GEN-LAST:event_jbtImportarActionPerformed
 

@@ -27,18 +27,17 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 public class testeImageIcon {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        File fileName = new File("/home/edilson/teste1.jpeg");
+        File fileName = new File("/home/edilson/teste3.jpg");
         FileInputStream io = new FileInputStream(fileName);
         ImageIcon i = new ImageIcon(ImageIO.read(io));
 
         Image image = i.getImage();
-        BufferedImage bImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
-        byte[] res = null;
+        BufferedImage bImage = (BufferedImage) image;
+
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write((RenderedImage) bImage, "jpeg", baos);
-        res = baos.toByteArray();
-        String encodedImage = Base64.encode(baos.toByteArray());
+        ImageIO.write(bImage, "png", baos);
+        byte[] res = baos.toByteArray();
 
         InputStream is = new ByteArrayInputStream(res);
 
