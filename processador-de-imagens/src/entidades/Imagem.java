@@ -1,7 +1,5 @@
 package entidades;
 
-import java.awt.Image;
-import java.io.InputStream;
 import java.io.Serializable;
 import javax.swing.ImageIcon;
 
@@ -9,7 +7,6 @@ public class Imagem implements Serializable{
 
     private int cod;
     private String nome;
-    //private InputStream imagem;
     private ImageIcon imagem;
     private int usuario;
     private String processamento;
