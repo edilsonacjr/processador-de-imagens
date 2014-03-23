@@ -1,13 +1,18 @@
 package testes;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -26,12 +31,20 @@ public class testeImageIcon {
         FileInputStream io = new FileInputStream(fileName);
         ImageIcon i = new ImageIcon(ImageIO.read(io));
 
-        Image img = i.getImage();
-                //new BufferedImage(
-                //i.getIconWidth(),
-                //i.getIconHeight(),
-               // BufferedImage.TYPE_INT_RGB);
-        //i.getImagem();
+        Image image = i.getImage();
+        BufferedImage bImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        byte[] res = null;
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write((RenderedImage) bImage, "jpeg", baos);
+        res = baos.toByteArray();
+        String encodedImage = Base64.encode(baos.toByteArray());
+
+        InputStream is = new ByteArrayInputStream(res);
+
+        ImageIcon ii = new ImageIcon(ImageIO.read(is));
+
+        Image img = ii.getImage();
 
         JFrame jFImagem = new JFrame("Imagem Carregada...");
 

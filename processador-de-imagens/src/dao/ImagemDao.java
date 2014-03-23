@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
 
 /**
@@ -39,10 +40,12 @@ public class ImagemDao {
 
         Image image = item.getImagem().getImage();
         BufferedImage bImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        //ImageIO
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        ImageIO.write((RenderedImage) image,"jpeg", os);
-        InputStream is = new ByteArrayInputStream(os.toByteArray());
+        //ImageIO.write(bImage,bImage.getType(), os);
+        
+        InputStream is = (InputStream) ImageIO.createImageInputStream(image);//new ByteArrayInputStream(os.toByteArray());
 
         stmt.setBlob(2, is);
         stmt.setInt(3, item.getUsuario());
@@ -65,7 +68,8 @@ public class ImagemDao {
 
             p.setNome(rs.getString("nome"));
             p.setCod(rs.getInt("cod"));
-            p.setImagem(new ImageIcon(ImageIO.read((InputStream) rs.getBinaryStream("imagem"))));
+            if(rs.getBinaryStream("imagem")!=null)
+                p.setImagem(new ImageIcon(ImageIO.read((InputStream) rs.getBinaryStream("imagem"))));
             p.setProcessamento(rs.getString("processamento"));
             p.setUsuario(rs.getInt("usuario"));
 
