@@ -8,6 +8,7 @@ package view;
 import entidades.Imagem;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class ProcessamentoView extends javax.swing.JFrame {
     /**
      * Creates new form ProcessamentoView
      */
-    public ProcessamentoView(Principal p) {
+    public ProcessamentoView(Principal p, Imagem imagem) {
         noise = 0;
         templateSize = 1;
         noiseType = "Gaussian";
@@ -56,6 +57,7 @@ public class ProcessamentoView extends javax.swing.JFrame {
         sizes = new ArrayList();
         this.p = p;
         mode = 1;
+        this.imagem = imagem;
 
         initComponents();
     }
@@ -806,7 +808,7 @@ public class ProcessamentoView extends javax.swing.JFrame {
     }
     private void jBProcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBProcessarActionPerformed
         try {
-            img = ImageIO.read(imagem.getImagem());
+            img = imagem.getImagem().getImage();
 
             Image output = null;
 

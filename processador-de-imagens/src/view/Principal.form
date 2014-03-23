@@ -83,6 +83,7 @@
                   <Component id="jbtProcessar" max="32767" attributes="0"/>
                   <Component id="jbtVisualizar" max="32767" attributes="0"/>
                   <Component id="jbtProcessarTodas" max="32767" attributes="0"/>
+                  <Component id="jbtRemover" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -102,6 +103,8 @@
                       <Component id="jbtVisualizar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jbtProcessarTodas" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jbtRemover" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -170,6 +173,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Processar Todas as Imagens"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbtRemover">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Remover Imagem"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtRemoverActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

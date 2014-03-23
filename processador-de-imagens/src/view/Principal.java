@@ -5,7 +5,6 @@
  */
 package view;
 
-import dao.ImagemDao;
 import entidades.Imagem;
 import entidades.Usuario;
 import java.awt.BorderLayout;
@@ -70,12 +69,11 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        }
     }
 
-    public void updateT() throws SQLException {
-        ImagemDao dao = new ImagemDao();
-        ArrayList<Imagem> us = dao.getLista(usuario.getCod());
+    public void updateT() throws SQLException, RemoteException {
+        ArrayList<Imagem> us = this.servico.getImagens(usuario.getCod());
         String[][] data = new String[us.size()][3];
         ArrayList<String> usernames = new ArrayList<>();
         int i = 0;
@@ -108,6 +106,7 @@ public class Principal extends javax.swing.JFrame {
         jbtProcessar = new javax.swing.JButton();
         jbtVisualizar = new javax.swing.JButton();
         jbtProcessarTodas = new javax.swing.JButton();
+        jbtRemover = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -161,6 +160,13 @@ public class Principal extends javax.swing.JFrame {
 
         jbtProcessarTodas.setText("Processar Todas as Imagens");
 
+        jbtRemover.setText("Remover Imagem");
+        jbtRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoverActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Arquivo");
 
         jMenuItem2.setText("Importar Imagens");
@@ -201,7 +207,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jbtImportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtProcessar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbtProcessarTodas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jbtProcessarTodas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -217,7 +224,9 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jbtVisualizar)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtProcessarTodas)))
+                        .addComponent(jbtProcessarTodas)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtRemover)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbtSair)
                 .addContainerGap())
@@ -256,11 +265,10 @@ public class Principal extends javax.swing.JFrame {
             FileInputStream io = new FileInputStream(fileName);
             Imagem i = new Imagem();
             i.setNome(nome.substring(nome.lastIndexOf("/") + 1));
-            i.setImagem(io);
+            i.setImagem(new ImageIcon(ImageIO.read(io)));
             i.setUsuario(usuario.getCod());
             i.setProcessamento("Nenhum");
-            ImagemDao dao = new ImagemDao();
-            dao.adiciona(i);
+            this.servico.inserirImagem(i);
             updateT();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -269,11 +277,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void jbtVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtVisualizarActionPerformed
         Image img = null;
-        ImagemDao dao;
         try {
-            dao = new ImagemDao();
-            Imagem i = dao.getImagem(Integer.valueOf((String) jtbImagens.getValueAt(jtbImagens.getSelectedRow(), 0)));
-            img = ImageIO.read(i.getImagem());
+            Imagem i = this.servico.getImagem(Integer.valueOf((String) jtbImagens.getValueAt(jtbImagens.getSelectedRow(), 0)));
+            img = i.getImagem().getImage();
 
             JFrame jFImagem = new JFrame("Imagem Carregada...");
 
@@ -295,10 +301,25 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtVisualizarActionPerformed
 
     private void jbtProcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtProcessarActionPerformed
-        // TODO add your handling code here:
-        new ProcessamentoView(this).setVisible(true);
-        
+
+        try {
+            Imagem i = this.servico.getImagem(Integer.valueOf((String) jtbImagens.getValueAt(jtbImagens.getSelectedRow(), 0)));
+            new ProcessamentoView(this, i).setVisible(true);
+        } catch (Exception ex) {
+
+        }
+
     }//GEN-LAST:event_jbtProcessarActionPerformed
+
+    private void jbtRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoverActionPerformed
+
+        try {
+            this.servico.removerImagem(Integer.valueOf((String) jtbImagens.getValueAt(jtbImagens.getSelectedRow(), 0)));
+            updateT();
+        } catch (Exception ex) {
+
+        }
+    }//GEN-LAST:event_jbtRemoverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -348,6 +369,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jbtImportar;
     private javax.swing.JButton jbtProcessar;
     private javax.swing.JButton jbtProcessarTodas;
+    private javax.swing.JButton jbtRemover;
     private javax.swing.JButton jbtSair;
     private javax.swing.JButton jbtVisualizar;
     private javax.swing.JTable jtbImagens;

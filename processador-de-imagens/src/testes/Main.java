@@ -776,16 +776,16 @@ public class Main extends javax.swing.JFrame {
             noise = jSNoise.getValue();
             templateSize = jSTamModelo.getValue();
 
-            output = new InterfaceRmiImp().averaging(imagem, noise, noiseType, templateSize, tamOutput);
+            //output = new InterfaceRmiImp().averaging(imagem, noise, noiseType, templateSize, tamOutput);
         } else if (jCBTipo.getSelectedItem().toString().equals("Fourier")) {
             ratio = jSRaio.getValue();
-            output = new InterfaceRmiImp().fourier(imagem, lowpass, ratio, tamOutput);
+            //output = new InterfaceRmiImp().fourier(imagem, lowpass, ratio, tamOutput);
         } else if (jCBTipo.getSelectedItem().toString().equals("GaussianFiltering")) {
             noise = jSNoiseG.getValue();
             ratio = jSRaioG.getValue();
             sigma = jSTSigma.getValue();
 
-            output = new InterfaceRmiImp().gaussian(imagem, noiseType, noise, ratio, sigma, tamOutput);
+            //output = new InterfaceRmiImp().gaussian(imagem, noiseType, noise, ratio, sigma, tamOutput);
         } else if (jCBTipo.getSelectedItem().toString().equals("MedianFiltering")) {
             noise = jSNoise.getValue();
             templateSize = jSTamModelo.getValue();
@@ -793,12 +793,12 @@ public class Main extends javax.swing.JFrame {
                 templateSize = 3;
             }
 
-            output = new InterfaceRmi().median(imagem, noise, noiseType, templateSize, tamOutput);
+            //output = new InterfaceRmi().median(imagem, noise, noiseType, templateSize, tamOutput);
         } else if (jCBTipo.getSelectedItem().toString().equals("Thresholding")) {
             threshold = jSThLower.getValue();
             threshold2 = jSThUpper.getValue();
 
-            output = new InterfaceRmiImp().thresholding(imagem, modeType,threshold, threshold2, tamOutput);
+            //output = new InterfaceRmiImp().thresholding(imagem, modeType,threshold, threshold2, tamOutput);
         }
         if (output == null) {
             JOptionPane.showMessageDialog(null, "Erro! Imagem não Processada. Tente novamente...");

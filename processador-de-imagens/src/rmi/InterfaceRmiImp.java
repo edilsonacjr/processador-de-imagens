@@ -1,14 +1,18 @@
 package rmi;
 
+import dao.ImagemDao;
 import dao.UsuarioDao;
+import entidades.Imagem;
 import entidades.Usuario;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -32,6 +36,58 @@ import operacoes.TwoDArray;
 public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi {
 
     public InterfaceRmiImp() throws RemoteException {
+    }
+
+    public ArrayList<Imagem> getImagens(int i) throws RemoteException{
+        ImagemDao dao;
+        ArrayList<Imagem> us = null;
+        
+        try {
+            dao = new ImagemDao();
+            us = dao.getLista(i);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return us;
+    }
+    
+    public Imagem getImagem(int i) throws RemoteException {
+        ImagemDao dao;
+        Imagem im = new Imagem();
+        try {
+            dao = new ImagemDao();
+            im = dao.getImagem(i);
+            return im;
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return im;
+    }
+
+    public void inserirImagem(Imagem i) throws RemoteException {
+        ImagemDao dao;
+        try {
+            dao = new ImagemDao();
+            dao.adiciona(i);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    public void removerImagem(int i) throws RemoteException{
+        ImagemDao dao;
+        try {
+            dao = new ImagemDao();
+            dao.remove(i);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 
     public boolean validaUsuario(String username, String senha) throws RemoteException {
@@ -249,7 +305,7 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         //Image output = tk.createImage(new MemoryImageSource(tamOutput, height / (width / tamOutput), edgedetector.process(), 0, width));
         return output;
     }
-    
+
     public Image nomax(Image image, int mode, int tamOutput) {
         int orig[] = null;
         int width = 0, height = 0;
@@ -283,4 +339,5 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         }
         return output;
     }
+
 }
