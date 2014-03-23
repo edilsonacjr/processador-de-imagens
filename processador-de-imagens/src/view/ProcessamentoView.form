@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JMenu" name="jMenu1">
       <Properties>
@@ -35,9 +35,18 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jTPProcessamento" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLTamSaida" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jCBTamSaida" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jBProcessar" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -46,22 +55,30 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <Component id="jTPProcessamento" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="jLTamSaida" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCBTamSaida" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jBProcessar" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+    <Container class="javax.swing.JTabbedPane" name="jTPProcessamento">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JLayeredPane" name="jLPAveraging2">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Processamento 1">
-                <Property name="tabTitle" type="java.lang.String" value="Processamento 1"/>
+              <JTabbedPaneConstraints tabName="Averaging">
+                <Property name="tabTitle" type="java.lang.String" value="Averaging"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -69,21 +86,127 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="646" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLTipoRuido2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLTamModelo2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLTaxaRuido2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jSNoise" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jRBGaussian" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jRBCondiment" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="285" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jSTamModelo" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="324" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLTipoRuido2" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                          <Component id="jRBGaussian" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jRBCondiment" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jSTamModelo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLTamModelo2" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jSNoise" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLTaxaRuido2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLTamModelo2">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="15" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Tamanho do Modelo:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSlider" name="jSTamModelo">
+              <Properties>
+                <Property name="majorTickSpacing" type="int" value="3"/>
+                <Property name="maximum" type="int" value="17"/>
+                <Property name="minimum" type="int" value="1"/>
+                <Property name="minorTickSpacing" type="int" value="1"/>
+                <Property name="paintLabels" type="boolean" value="true"/>
+                <Property name="paintTicks" type="boolean" value="true"/>
+                <Property name="snapToTicks" type="boolean" value="true"/>
+                <Property name="value" type="int" value="1"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLTipoRuido2">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="15" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Tipo de Ru&#xed;do:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="jRBGaussian">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gaussian"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBGaussianActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="jRBCondiment">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Condiment"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBCondimentActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JSlider" name="jSNoise">
+              <Properties>
+                <Property name="majorTickSpacing" type="int" value="10"/>
+                <Property name="maximum" type="int" value="50"/>
+                <Property name="minorTickSpacing" type="int" value="2"/>
+                <Property name="paintLabels" type="boolean" value="true"/>
+                <Property name="paintTicks" type="boolean" value="true"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLTaxaRuido2">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="15" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Taxa de Ru&#xed;do: "/>
+              </Properties>
+            </Component>
+          </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel2">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Processamento 2">
-                <Property name="tabTitle" type="java.lang.String" value="Processamento 2"/>
+              <JTabbedPaneConstraints tabName="Fourier">
+                <Property name="tabTitle" type="java.lang.String" value="Fourier"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -91,21 +214,122 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="646" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLPFourier" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="99" max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="324" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLPFourier" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="169" max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JLayeredPane" name="jLPFourier">
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLFiltroF" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jRBHighPass" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jRBLowPass" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLRaio" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jSRaio" min="-2" pref="482" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="20" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLFiltroF" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRBHighPass" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRBLowPass" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLRaio" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jSRaio" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLFiltroF">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ubuntu" size="15" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Filtro: "/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="jRBHighPass">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="High Pass"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBHighPassActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="jRBLowPass">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Low Pass"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBLowPassActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLRaio">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ubuntu" size="15" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Raio:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSlider" name="jSRaio">
+                  <Properties>
+                    <Property name="majorTickSpacing" type="int" value="10"/>
+                    <Property name="minimum" type="int" value="5"/>
+                    <Property name="minorTickSpacing" type="int" value="5"/>
+                    <Property name="paintLabels" type="boolean" value="true"/>
+                    <Property name="paintTicks" type="boolean" value="true"/>
+                    <Property name="snapToTicks" type="boolean" value="true"/>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                    <Property name="value" type="int" value="6"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel3">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Processamento 3">
-                <Property name="tabTitle" type="java.lang.String" value="Processamento 3"/>
+              <JTabbedPaneConstraints tabName="Gaussian">
+                <Property name="tabTitle" type="java.lang.String" value="Gaussian"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -113,21 +337,178 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="646" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLPGaussian" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="107" max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="324" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLPGaussian" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JLayeredPane" name="jLPGaussian">
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLSigma" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLTaxaRuidoG" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLTipoRuidoG" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLRaioG" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jSTSigma" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jSNoiseG" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jSRaioG" alignment="0" min="-2" pref="368" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jRBGaussianG" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jRBCondimentG" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jRBGaussianG" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRBCondimentG" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLTipoRuidoG" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jSNoiseG" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLTaxaRuidoG" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jSTSigma" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLSigma" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLRaioG" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jSRaioG" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLTipoRuidoG">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ubuntu" size="15" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Tipo de Ru&#xed;do:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="jRBGaussianG">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Gaussian"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBGaussianGActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="jRBCondimentG">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Condiment"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBCondimentGActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLTaxaRuidoG">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ubuntu" size="15" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Taxa de Ru&#xed;do: "/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSlider" name="jSNoiseG">
+                  <Properties>
+                    <Property name="majorTickSpacing" type="int" value="10"/>
+                    <Property name="maximum" type="int" value="50"/>
+                    <Property name="minorTickSpacing" type="int" value="2"/>
+                    <Property name="paintLabels" type="boolean" value="true"/>
+                    <Property name="paintTicks" type="boolean" value="true"/>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                    <Property name="value" type="int" value="0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLSigma">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ubuntu" size="15" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Sigma:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSlider" name="jSTSigma">
+                  <Properties>
+                    <Property name="majorTickSpacing" type="int" value="3"/>
+                    <Property name="maximum" type="int" value="17"/>
+                    <Property name="minimum" type="int" value="1"/>
+                    <Property name="minorTickSpacing" type="int" value="1"/>
+                    <Property name="paintLabels" type="boolean" value="true"/>
+                    <Property name="paintTicks" type="boolean" value="true"/>
+                    <Property name="snapToTicks" type="boolean" value="true"/>
+                    <Property name="value" type="int" value="1"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSlider" name="jSRaioG">
+                  <Properties>
+                    <Property name="majorTickSpacing" type="int" value="10"/>
+                    <Property name="minimum" type="int" value="5"/>
+                    <Property name="minorTickSpacing" type="int" value="5"/>
+                    <Property name="paintLabels" type="boolean" value="true"/>
+                    <Property name="paintTicks" type="boolean" value="true"/>
+                    <Property name="snapToTicks" type="boolean" value="true"/>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                    <Property name="value" type="int" value="6"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLRaioG">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ubuntu" size="15" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Raio:"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel4">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Processamento 4">
-                <Property name="tabTitle" type="java.lang.String" value="Processamento 4"/>
+              <JTabbedPaneConstraints tabName="Thresholding">
+                <Property name="tabTitle" type="java.lang.String" value="Thresholding"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -135,17 +516,375 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="646" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLPThresholding" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="324" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLPThresholding" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JLayeredPane" name="jLPThresholding">
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLModo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLThLower" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLThUpper" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jRBStandard" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jRBHysteresis" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="jSThUpper" alignment="1" pref="398" max="32767" attributes="0"/>
+                              <Component id="jSThLower" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jRBStandard" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRBHysteresis" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLModo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jSThLower" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLThLower" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jSThUpper" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLThUpper" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLModo">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ubuntu" size="15" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Modo: "/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="jRBStandard">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Standard"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBStandardActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="jRBHysteresis">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Hysteresis"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBHysteresisActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JSlider" name="jSThUpper">
+                  <Properties>
+                    <Property name="majorTickSpacing" type="int" value="25"/>
+                    <Property name="maximum" type="int" value="255"/>
+                    <Property name="minimum" type="int" value="5"/>
+                    <Property name="minorTickSpacing" type="int" value="5"/>
+                    <Property name="paintLabels" type="boolean" value="true"/>
+                    <Property name="paintTicks" type="boolean" value="true"/>
+                    <Property name="snapToTicks" type="boolean" value="true"/>
+                    <Property name="value" type="int" value="5"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSlider" name="jSThLower">
+                  <Properties>
+                    <Property name="majorTickSpacing" type="int" value="25"/>
+                    <Property name="maximum" type="int" value="255"/>
+                    <Property name="minimum" type="int" value="5"/>
+                    <Property name="minorTickSpacing" type="int" value="5"/>
+                    <Property name="paintLabels" type="boolean" value="true"/>
+                    <Property name="paintTicks" type="boolean" value="true"/>
+                    <Property name="snapToTicks" type="boolean" value="true"/>
+                    <Property name="value" type="int" value="5"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLThLower">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ubuntu" size="15" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="TH Lower:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLThUpper">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ubuntu" size="15" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="TH Upper:"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JLayeredPane" name="jLPAveraging3">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Median">
+                <Property name="tabTitle" type="java.lang.String" value="Median"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLTipoRuido3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLTamModelo3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLTaxaRuido3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jSNoiseM" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jRBGaussianM" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jRBCondimentM" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="285" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jSTamModeloM" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLTipoRuido3" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                          <Component id="jRBGaussianM" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jRBCondimentM" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jSTamModeloM" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLTamModelo3" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jSNoiseM" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLTaxaRuido3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLTamModelo3">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="15" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Tamanho do Modelo:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSlider" name="jSTamModeloM">
+              <Properties>
+                <Property name="majorTickSpacing" type="int" value="3"/>
+                <Property name="maximum" type="int" value="17"/>
+                <Property name="minimum" type="int" value="1"/>
+                <Property name="minorTickSpacing" type="int" value="1"/>
+                <Property name="paintLabels" type="boolean" value="true"/>
+                <Property name="paintTicks" type="boolean" value="true"/>
+                <Property name="snapToTicks" type="boolean" value="true"/>
+                <Property name="value" type="int" value="1"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLTipoRuido3">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="15" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Tipo de Ru&#xed;do:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="jRBGaussianM">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gaussian"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBGaussianMActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="jRBCondimentM">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Condiment"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBCondimentMActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JSlider" name="jSNoiseM">
+              <Properties>
+                <Property name="majorTickSpacing" type="int" value="10"/>
+                <Property name="maximum" type="int" value="50"/>
+                <Property name="minorTickSpacing" type="int" value="2"/>
+                <Property name="paintLabels" type="boolean" value="true"/>
+                <Property name="paintTicks" type="boolean" value="true"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLTaxaRuido3">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="15" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Taxa de Ru&#xed;do: "/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JLayeredPane" name="jLPNoMax">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="NonMax">
+                <Property name="tabTitle" type="java.lang.String" value="NonMax"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLModeNoMax" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jRBOriginal" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jRBEdge" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jRBThreshold" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="348" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLModeNoMax" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jRBOriginal" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jRBEdge" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jRBThreshold" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="267" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLModeNoMax">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="15" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Mode: "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="jRBOriginal">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Original"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBOriginalActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="jRBEdge">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Edge"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBEdgeActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="jRBThreshold">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Threshold"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBThresholdActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="jBProcessar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Processar Imagem"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBProcessarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jCBTamSaida">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="1">
+            <StringItem index="0" value="Tam. Original"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCBTamSaidaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLTamSaida">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Ubuntu" size="15" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Tamanho da Sa&#xed;da: "/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

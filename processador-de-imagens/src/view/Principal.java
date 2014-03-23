@@ -146,6 +146,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jbtProcessar.setText("Processar Imagem");
+        jbtProcessar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtProcessarActionPerformed(evt);
+            }
+        });
 
         jbtVisualizar.setText("Visualizar Imagem");
         jbtVisualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -288,6 +293,12 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbtVisualizarActionPerformed
+
+    private void jbtProcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtProcessarActionPerformed
+        // TODO add your handling code here:
+        new ProcessamentoView(this).setVisible(true);
+        
+    }//GEN-LAST:event_jbtProcessarActionPerformed
 
     /**
      * @param args the command line arguments

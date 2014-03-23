@@ -21,6 +21,7 @@ import operacoes.GaussianNoise;
 import operacoes.HystThresh;
 import operacoes.InverseFFT;
 import operacoes.MedianFilter;
+import operacoes.NonMax;
 import operacoes.Sobel;
 import operacoes.TwoDArray;
 
@@ -246,6 +247,40 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         Image output = tk.createImage(new MemoryImageSource(width, height, orig, 0, width));
         output = output.getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
         //Image output = tk.createImage(new MemoryImageSource(tamOutput, height / (width / tamOutput), edgedetector.process(), 0, width));
+        return output;
+    }
+    
+    public Image nomax(Image image, int mode, int tamOutput) {
+        int orig[] = null;
+        int width = 0, height = 0;
+        width = image.getWidth(null);
+        height = image.getHeight(null);
+        Sobel edgedetector;
+        NonMax nonmaxOp;
+        orig = new int[width * height];
+        PixelGrabber grabber = new PixelGrabber(image, 0, 0, width, height, orig, 0, width);
+        try {
+            grabber.grabPixels();
+        } catch (InterruptedException e2) {
+            System.out.println("error: " + e2);
+        }
+        edgedetector = new Sobel();
+        nonmaxOp = new NonMax();
+        edgedetector.init(orig, width, height);
+        if (mode > 1) {
+            orig = edgedetector.process();
+        }
+        if (mode == 3) {
+            orig = threshold(orig, 50);
+        }
+
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        Image output = tk.createImage(new MemoryImageSource(width, height, orig, 0, width));
+        nonmaxOp.init(orig, width, height);
+        orig = nonmaxOp.process();
+        if ((mode == 1) || (mode == 3)) {
+            output = tk.createImage(new MemoryImageSource(width, height, orig, 0, width));
+        }
         return output;
     }
 }

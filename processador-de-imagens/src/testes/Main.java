@@ -24,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import rmi.InterfaceRmi;
 import rmi.InterfaceRmiImp;
 
 /**
@@ -792,7 +793,7 @@ public class Main extends javax.swing.JFrame {
                 templateSize = 3;
             }
 
-            output = new InterfaceRmiImp().median(imagem, noise, noiseType, templateSize, tamOutput);
+            output = new InterfaceRmi().median(imagem, noise, noiseType, templateSize, tamOutput);
         } else if (jCBTipo.getSelectedItem().toString().equals("Thresholding")) {
             threshold = jSThLower.getValue();
             threshold2 = jSThUpper.getValue();
