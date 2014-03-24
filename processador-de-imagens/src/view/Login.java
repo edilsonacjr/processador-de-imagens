@@ -26,6 +26,8 @@ public class Login extends javax.swing.JFrame {
         this.p = p;
         initComponents();
         this.requestFocus();
+        
+    this.setAlwaysOnTop(true);
     }
     
     /**
