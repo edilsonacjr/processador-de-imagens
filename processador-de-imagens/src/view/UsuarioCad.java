@@ -147,6 +147,7 @@ public class UsuarioCad extends javax.swing.JFrame {
         } catch (RemoteException ex) {
             Logger.getLogger(UsuarioCad.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.dispose();
     }//GEN-LAST:event_jbtCadastrarActionPerformed
 
     private void jbtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelarActionPerformed
