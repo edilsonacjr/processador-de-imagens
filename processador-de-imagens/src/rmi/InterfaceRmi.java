@@ -15,6 +15,9 @@ public interface InterfaceRmi extends Remote {
     public void inserirImagem(Imagem i) throws RemoteException;
     public void removerImagem(int i) throws RemoteException;
     public ArrayList<Imagem> getImagens(int i) throws RemoteException;
+    public ArrayList<Usuario> getUsuarios() throws RemoteException;
+    public void inserirUsuario(Usuario i) throws RemoteException;
+    public void removerUsuario(int i) throws RemoteException;
     public Imagem averaging(Imagem imagem, int noise, String noiseMode, int templateSize, int tamOutput) throws RemoteException;
     public Imagem fourier(Imagem imagem, Boolean lowpass, int radius, int tamOutput) throws RemoteException;
     public Imagem gaussian(Imagem imagem, String noiseMode, int noise, int radius, int sigma, int tamOutput)throws RemoteException;

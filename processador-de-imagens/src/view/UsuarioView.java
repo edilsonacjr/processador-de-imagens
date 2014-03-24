@@ -4,8 +4,8 @@
  */
 package view;
 
-import dao.UsuarioDao;
 import entidades.Usuario;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -19,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class UsuarioView extends javax.swing.JFrame {
 
+    private Principal p;
+
     /**
      * Creates new form UsuarioView
      */
@@ -28,13 +30,26 @@ public class UsuarioView extends javax.swing.JFrame {
             updateT();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(UsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public UsuarioView(Principal P) {
+        this.p = p;
+        initComponents();
+        try {
+            updateT();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(UsuarioView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @SuppressWarnings("empty-statement")
-    public void updateT() throws SQLException {
-        UsuarioDao dao = new UsuarioDao();
-        ArrayList<Usuario> us = dao.getLista();
+    public void updateT() throws SQLException, RemoteException {
+        ArrayList<Usuario> us = p.servico.getUsuarios();
         String[][] data = new String[us.size()][2];
         ArrayList<String> usernames = new ArrayList<>();
         int i = 0;
@@ -135,29 +150,28 @@ public class UsuarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtSairActionPerformed
 
     private void jbtAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAdicionarActionPerformed
-        new UsuarioCad(this).setVisible(true);
+        new UsuarioCad(this,p).setVisible(true);
     }//GEN-LAST:event_jbtAdicionarActionPerformed
 
     private void jbtRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoverActionPerformed
-        if(jtbUsername.getSelectedRow() == -1)
+        if (jtbUsername.getSelectedRow() == -1) {
             return;
-        UsuarioDao dao;
+        }
         try {
-            dao = new UsuarioDao();
-            ArrayList<Usuario> us = dao.getLista();
+            ArrayList<Usuario> us = p.servico.getUsuarios();
             String username = (String) jtbUsername.getValueAt(jtbUsername.getSelectedRow(), 0);
-            for(Usuario u : us){
-                if(username.equals(u.getUsername())){
-                    dao.remove(u);
+            for (Usuario u : us) {
+                if (username.equals(u.getUsername())) {
+                    p.servico.removerUsuario(u.getCod());
                     updateT();
                     return;
                 }
             }
-            
-        } catch (SQLException ex) {
+
+        } catch (Exception ex) {
             Logger.getLogger(UsuarioView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jbtRemoverActionPerformed
 
     /**

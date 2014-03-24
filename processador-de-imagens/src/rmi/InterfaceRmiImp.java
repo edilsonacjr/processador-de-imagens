@@ -354,4 +354,45 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         return output;
     }
 
+    @Override
+    public ArrayList<Usuario> getUsuarios() throws RemoteException {
+        UsuarioDao dao = null;
+        try {
+            dao = new UsuarioDao();
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ArrayList<Usuario> us = new ArrayList<Usuario>();
+        try {
+            us = dao.getLista();
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return us;
+    }
+
+    @Override
+    public void inserirUsuario(Usuario i) throws RemoteException {
+        UsuarioDao dao;
+        try {
+            dao = new UsuarioDao();
+            dao.adiciona(i);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }
+
+    @Override
+    public void removerUsuario(int i) throws RemoteException {
+        Usuario u = new Usuario();
+        u.setCod(i);
+        UsuarioDao dao;
+        try {
+            dao = new UsuarioDao();
+            dao.remove(u);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceRmiImp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

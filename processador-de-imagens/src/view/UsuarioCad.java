@@ -4,8 +4,8 @@
  */
 package view;
 
-import dao.UsuarioDao;
 import entidades.Usuario;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,13 +17,15 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioCad extends javax.swing.JFrame {
     private UsuarioView uv;
+    private Principal p;
     /**
      * Creates new form UsuarioCad
      */
     public UsuarioCad() {
         initComponents();
     }
-    public UsuarioCad(UsuarioView uv) {
+    public UsuarioCad(UsuarioView uv, Principal p) {
+        this.p = p;
         this.uv = uv;
         initComponents();
     }
@@ -136,16 +138,15 @@ public class UsuarioCad extends javax.swing.JFrame {
         u.setUsername(jtfUsername.getText());
         u.setSenha(jtfSenha.getText());
         u.setAdmin(jrbSim.isSelected()?true:false);
-        UsuarioDao dao;
         try {
-            dao = new UsuarioDao();
-            dao.adiciona(u);
+            p.servico.inserirUsuario(u);
             uv.updateT();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Usuário já cadastrado!");
             return;
-        }  
-        this.dispose();
+        } catch (RemoteException ex) {
+            Logger.getLogger(UsuarioCad.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbtCadastrarActionPerformed
 
     private void jbtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelarActionPerformed

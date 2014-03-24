@@ -229,7 +229,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         if (usuario.isAdmin()) {
-            new UsuarioView().setVisible(true);
+            new UsuarioView(this).setVisible(true);
         }else{
             JOptionPane.showMessageDialog(null, "Acesso não permitido!!");
         }
