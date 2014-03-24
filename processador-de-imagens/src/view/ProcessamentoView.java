@@ -28,7 +28,7 @@ import static view.Principal.servico;
  */
 public class ProcessamentoView extends javax.swing.JFrame {
 
-    private Imagem imagem;
+    private ArrayList<Imagem> imagem;
     private int noise;
     private int templateSize;
     private String noiseType;
@@ -45,7 +45,7 @@ public class ProcessamentoView extends javax.swing.JFrame {
     /**
      * Creates new form ProcessamentoView
      */
-    public ProcessamentoView(Principal p, Imagem imagem) {
+    public ProcessamentoView(Principal p, ArrayList<Imagem> imagem) {
         noise = 0;
         templateSize = 1;
         noiseType = "Gaussian";
@@ -60,8 +60,11 @@ public class ProcessamentoView extends javax.swing.JFrame {
         mode = 1;
         initComponents();
         this.imagem = imagem;
-
-        calculaTamanhos(imagem.getImagem().getImage().getWidth(null), imagem.getImagem().getImage().getHeight(null));
+        if (imagem.size() > 1) {
+            jCBTamSaida.setEnabled(false);
+        } else {
+            calculaTamanhos(imagem.get(0).getImagem().getImage().getWidth(null), imagem.get(0).getImagem().getImage().getHeight(null));
+        }
     }
 
     private ProcessamentoView() {
@@ -808,68 +811,75 @@ public class ProcessamentoView extends javax.swing.JFrame {
 
     }
     private void jBProcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBProcessarActionPerformed
-        try {
-            Imagem output = new Imagem();
-            String processamento = "";
-            int tamOutput = sizes.get(jCBTamSaida.getSelectedIndex());
-            if (jTPProcessamento.getSelectedIndex() == 0) {
-                noise = jSNoise.getValue();
-                templateSize = jSTamModelo.getValue();
-                output = p.servico.averaging(imagem, noise, noiseType, templateSize, tamOutput);
-                processamento = "Averaging";
-            } else if (jTPProcessamento.getSelectedIndex() == 1) {
-                ratio = jSRaio.getValue();
-                output = p.servico.fourier(imagem, lowpass, ratio, tamOutput);
-                processamento = "Fourier";
-            } else if (jTPProcessamento.getSelectedIndex() == 2) {
-                noise = jSNoiseG.getValue();
-                ratio = jSRaioG.getValue();
-                sigma = jSTSigma.getValue();
-
-                output = p.servico.gaussian(imagem, noiseType, noise, ratio, sigma, tamOutput);
-                processamento = "Gaussian";
-            } else if (jTPProcessamento.getSelectedIndex() == 4) {
-                noise = jSNoiseM.getValue();
-                templateSize = jSTamModeloM.getValue();
-                if (templateSize < 3) {
-                    templateSize = 3;
+        int processType = jTPProcessamento.getSelectedIndex();
+        for (int i = 0; i < imagem.size(); i++) {
+            try {
+                int tamOutput = imagem.get(i).getImagem().getImage().getWidth(null);
+                Imagem output = new Imagem();
+                String processamento = "";
+                if (imagem.size() == 1) {
+                    tamOutput = sizes.get(jCBTamSaida.getSelectedIndex());
                 }
 
-                output = p.servico.median(imagem, noise, noiseType, templateSize, tamOutput);
-                processamento = "Median";
-            } else if (jTPProcessamento.getSelectedIndex() == 3) {
-                threshold = jSThLower.getValue();
-                threshold2 = jSThUpper.getValue();
+                if (processType == 0) {
+                    noise = jSNoise.getValue();
+                    templateSize = jSTamModelo.getValue();
+                    output = p.servico.averaging(imagem.get(i), noise, noiseType, templateSize, tamOutput);
+                    processamento = "Averaging";
+                } else if (processType == 1) {
+                    ratio = jSRaio.getValue();
+                    output = p.servico.fourier(imagem.get(i), lowpass, ratio, tamOutput);
+                    processamento = "Fourier";
+                } else if (processType == 2) {
+                    noise = jSNoiseG.getValue();
+                    ratio = jSRaioG.getValue();
+                    sigma = jSTSigma.getValue();
 
-                output = p.servico.thresholding(imagem, modeType, threshold, threshold2, tamOutput);
-                processamento = "Thresholding";
-            } else if (jTPProcessamento.getSelectedIndex() == 5) {
+                    output = p.servico.gaussian(imagem.get(i), noiseType, noise, ratio, sigma, tamOutput);
+                    processamento = "Gaussian";
+                } else if (processType == 4) {
+                    noise = jSNoiseM.getValue();
+                    templateSize = jSTamModeloM.getValue();
+                    if (templateSize < 3) {
+                        templateSize = 3;
+                    }
 
-                output = p.servico.nomax(imagem, mode, tamOutput);
-                processamento = "NoMax";
-            }
-            if (output == null) {
-                JOptionPane.showMessageDialog(null, "Erro! Imagem não Processada. Tente novamente...");
+                    output = p.servico.median(imagem.get(i), noise, noiseType, templateSize, tamOutput);
+                    processamento = "Median";
+                } else if (processType == 3) {
+                    threshold = jSThLower.getValue();
+                    threshold2 = jSThUpper.getValue();
 
-            } else {
-                output.setNome(processamento+imagem.getNome());
-                output.setUsuario(p.getUsuario().getCod());
-                output.setProcessamento(processamento);
-                p.servico.inserirImagem(output);
-                try {
-                    p.updateT();
-                    this.dispose();
-                    JOptionPane.showMessageDialog(null, "Processamento efetuado com Sucesso!");
-                } catch (SQLException ex) {
-                    Logger.getLogger(ProcessamentoView.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (RemoteException ex) {
-                    Logger.getLogger(ProcessamentoView.class.getName()).log(Level.SEVERE, null, ex);
+                    output = p.servico.thresholding(imagem.get(i), modeType, threshold, threshold2, tamOutput);
+                    processamento = "Thresholding";
+                } else if (processType == 5) {
+
+                    output = p.servico.nomax(imagem.get(i), mode, tamOutput);
+                    processamento = "NoMax";
                 }
-            }
+                if (output == null) {
+                    JOptionPane.showMessageDialog(null, "Erro! Imagem não Processada. Tente novamente...");
 
-        } catch (IOException ex) {
-            Logger.getLogger(ProcessamentoView.class.getName()).log(Level.SEVERE, null, ex);
+                } else {
+                    output.setNome(processamento + imagem.get(i).getNome());
+                    output.setUsuario(p.getUsuario().getCod());
+                    output.setProcessamento(processamento);
+                    p.servico.inserirImagem(output);
+                    try {
+                        p.updateT();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ProcessamentoView.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(ProcessamentoView.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(ProcessamentoView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        JOptionPane.showMessageDialog(null, "Processamento efetuado com Sucesso!");
+        this.dispose();
     }//GEN-LAST:event_jBProcessarActionPerformed
 
     private void jCBTamSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTamSaidaActionPerformed
