@@ -121,7 +121,8 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         return u;
     }
 
-    public Image averaging(Image image, int noise, String noiseMode, int templateSize, int tamOutput) throws  RemoteException{
+    public Imagem averaging(Imagem imagem, int noise, String noiseMode, int templateSize, int tamOutput) throws  RemoteException{
+        Image image = imagem.getImagem().getImage();
         int orig[] = null;
         int width = 0, height = 0;
         width = image.getWidth(null);
@@ -149,12 +150,14 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
 
         filter.init(orig, width, height, templateSize, tamOutput);
         Toolkit tk = Toolkit.getDefaultToolkit();
-        Image output = tk.createImage(new MemoryImageSource(width, height, filter.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
-
+        Image outputImage = tk.createImage(new MemoryImageSource(width, height, filter.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
+        Imagem output = new Imagem();
+        output.setImagem(new ImageIcon(outputImage));
         return output;
     }
 
-    public Image fourier(Image image, Boolean lowpass, int radius, int tamOutput) throws RemoteException{
+    public Imagem fourier(Imagem imagem, Boolean lowpass, int radius, int tamOutput) throws RemoteException{
+        Image image = imagem.getImagem().getImage();
         int orig[] = null;
         float origFloat[] = null;
         FFT fft = new FFT();
@@ -188,13 +191,15 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         fft = new FFT(orig, width, height);
 
         fft.intermediate = FreqFilter.filter(fft.intermediate, lowpass, radius);
-        TwoDArray output = inverse.transform(fft.intermediate);
-        Image invFourier = tk.createImage(new MemoryImageSource(width, height, inverse.getPixels(output), 0, output.width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
-
-        return invFourier;
+        TwoDArray out = inverse.transform(fft.intermediate);
+        Image invFourier = tk.createImage(new MemoryImageSource(width, height, inverse.getPixels(out), 0, out.width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
+        Imagem output = new Imagem();
+        output.setImagem(new ImageIcon(invFourier));
+        return output;
     }
 
-    public Image gaussian(Image image, String noiseMode, int noise, int radius, int sigma, int tamOutput) throws RemoteException{
+    public Imagem gaussian(Imagem imagem, String noiseMode, int noise, int radius, int sigma, int tamOutput) throws RemoteException{
+        Image image = imagem.getImagem().getImage();
         int orig[] = null;
         int width = image.getWidth(null);
         int height = image.getHeight(null);
@@ -219,17 +224,19 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
             orig = cNoise.process();
         }
         Toolkit tk = Toolkit.getDefaultToolkit();
-        Image output;
+        Image outputImage;
         if (noiseMode.equals("Gaussian")) {
-            output = tk.createImage(new MemoryImageSource(width, height, gNoise.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
+            outputImage = tk.createImage(new MemoryImageSource(width, height, gNoise.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
         } else {
-            output = tk.createImage(new MemoryImageSource(width, height, cNoise.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
+            outputImage = tk.createImage(new MemoryImageSource(width, height, cNoise.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
         }
-
+        Imagem output = new Imagem();
+        output.setImagem(new ImageIcon(outputImage));
         return output;
     }
 
-    public Image median(Image image, int noise, String noiseMode, int templateSize, int tamOutput) throws RemoteException{
+    public Imagem median(Imagem imagem, int noise, String noiseMode, int templateSize, int tamOutput) throws RemoteException{
+        Image image = imagem.getImagem().getImage();
         int orig[] = null;
         int width = 0, height = 0;
         width = image.getWidth(null);
@@ -257,8 +264,9 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
 
         filter.init(orig, width, height, templateSize, tamOutput);
         Toolkit tk = Toolkit.getDefaultToolkit();
-        Image output = tk.createImage(new MemoryImageSource(width, height, filter.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
-
+        Image outputImage = tk.createImage(new MemoryImageSource(width, height, filter.process(), 0, width)).getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
+        Imagem output = new Imagem();
+        output.setImagem(new ImageIcon(outputImage));
         return output;
     }
 
@@ -273,7 +281,8 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         return original;
     }
 
-    public Image thresholding(Image image, int mode, int threshold, int threshold2, int tamOutput) throws RemoteException{
+    public Imagem thresholding(Imagem imagem, int mode, int threshold, int threshold2, int tamOutput) throws RemoteException{
+        Image image = imagem.getImagem().getImage();
         int orig[] = null;
         int width = 0, height = 0;
         width = image.getWidth(null);
@@ -300,13 +309,16 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
             orig = hystThreshObject.process();
         }
         Toolkit tk = Toolkit.getDefaultToolkit();
-        Image output = tk.createImage(new MemoryImageSource(width, height, orig, 0, width));
-        output = output.getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
+        Image outputImage = tk.createImage(new MemoryImageSource(width, height, orig, 0, width));
+        outputImage = outputImage.getScaledInstance(tamOutput, height / (width / tamOutput), Image.SCALE_SMOOTH);
         //Image output = tk.createImage(new MemoryImageSource(tamOutput, height / (width / tamOutput), edgedetector.process(), 0, width));
+        Imagem output = new Imagem();
+        output.setImagem(new ImageIcon(outputImage));
         return output;
     }
 
-    public Image nomax(Image image, int mode, int tamOutput) throws RemoteException {
+    public Imagem nomax(Imagem imagem, int mode, int tamOutput) throws RemoteException {
+        Image image = imagem.getImagem().getImage();
         int orig[] = null;
         int width = 0, height = 0;
         width = image.getWidth(null);
@@ -331,12 +343,14 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         }
 
         Toolkit tk = Toolkit.getDefaultToolkit();
-        Image output = tk.createImage(new MemoryImageSource(width, height, orig, 0, width));
+        Image outputImage = tk.createImage(new MemoryImageSource(width, height, orig, 0, width));
         nonmaxOp.init(orig, width, height);
         orig = nonmaxOp.process();
         if ((mode == 1) || (mode == 3)) {
-            output = tk.createImage(new MemoryImageSource(width, height, orig, 0, width));
+            outputImage = tk.createImage(new MemoryImageSource(width, height, orig, 0, width));
         }
+        Imagem output = new Imagem();
+        output.setImagem(new ImageIcon(outputImage));
         return output;
     }
 

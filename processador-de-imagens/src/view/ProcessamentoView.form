@@ -131,7 +131,7 @@
                           <Component id="jSNoise" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLTaxaRuido2" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="201" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -226,7 +226,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLPFourier" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="169" max="32767" attributes="0"/>
+                      <EmptySpace pref="234" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -569,7 +569,7 @@
                               <Component id="jRBHysteresis" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLModo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="6" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jSThLower" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLThLower" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -816,7 +816,7 @@
                           <Component id="jRBEdge" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jRBThreshold" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="267" max="32767" attributes="0"/>
+                      <EmptySpace pref="292" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

@@ -29,7 +29,6 @@ import static view.Principal.servico;
 public class ProcessamentoView extends javax.swing.JFrame {
 
     private Imagem imagem;
-    private Image img;
     private int noise;
     private int templateSize;
     private String noiseType;
@@ -59,9 +58,10 @@ public class ProcessamentoView extends javax.swing.JFrame {
         sizes = new ArrayList();
         this.p = p;
         mode = 1;
-        img = imagem.getImagem().getImage();
         initComponents();
-        calculaTamanhos(img.getWidth(null), img.getHeight(null));
+        this.imagem = imagem;
+
+        calculaTamanhos(imagem.getImagem().getImage().getWidth(null), imagem.getImagem().getImage().getHeight(null));
     }
 
     private ProcessamentoView() {
@@ -215,7 +215,7 @@ public class ProcessamentoView extends javax.swing.JFrame {
                 .addGroup(jLPAveraging2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSNoise, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLTaxaRuido2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
         jLPAveraging2.setLayer(jLTamModelo2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLPAveraging2.setLayer(jSTamModelo, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -309,7 +309,7 @@ public class ProcessamentoView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLPFourier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(234, Short.MAX_VALUE))
         );
 
         jTPProcessamento.addTab("Fourier", jPanel2);
@@ -510,7 +510,7 @@ public class ProcessamentoView extends javax.swing.JFrame {
                     .addComponent(jRBStandard)
                     .addComponent(jRBHysteresis)
                     .addComponent(jLModo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
                 .addGroup(jLPThresholdingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSThLower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLThLower))
@@ -686,7 +686,7 @@ public class ProcessamentoView extends javax.swing.JFrame {
                     .addComponent(jRBOriginal)
                     .addComponent(jRBEdge)
                     .addComponent(jRBThreshold))
-                .addContainerGap(267, Short.MAX_VALUE))
+                .addContainerGap(292, Short.MAX_VALUE))
         );
         jLPNoMax.setLayer(jLModeNoMax, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLPNoMax.setLayer(jRBOriginal, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -809,24 +809,24 @@ public class ProcessamentoView extends javax.swing.JFrame {
     }
     private void jBProcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBProcessarActionPerformed
         try {
-            Image output = null;
-            String processamento ="";
+            Imagem output = new Imagem();
+            String processamento = "";
             int tamOutput = sizes.get(jCBTamSaida.getSelectedIndex());
             if (jTPProcessamento.getSelectedIndex() == 0) {
                 noise = jSNoise.getValue();
                 templateSize = jSTamModelo.getValue();
-                output = p.servico.averaging(img, noise, noiseType, templateSize, tamOutput);
+                output = p.servico.averaging(imagem, noise, noiseType, templateSize, tamOutput);
                 processamento = "Averaging";
             } else if (jTPProcessamento.getSelectedIndex() == 1) {
                 ratio = jSRaio.getValue();
-                output = p.servico.fourier(img, lowpass, ratio, tamOutput);
+                output = p.servico.fourier(imagem, lowpass, ratio, tamOutput);
                 processamento = "Fourier";
             } else if (jTPProcessamento.getSelectedIndex() == 2) {
                 noise = jSNoiseG.getValue();
                 ratio = jSRaioG.getValue();
                 sigma = jSTSigma.getValue();
 
-                output = p.servico.gaussian(img, noiseType, noise, ratio, sigma, tamOutput);
+                output = p.servico.gaussian(imagem, noiseType, noise, ratio, sigma, tamOutput);
                 processamento = "Gaussian";
             } else if (jTPProcessamento.getSelectedIndex() == 4) {
                 noise = jSNoiseM.getValue();
@@ -835,30 +835,31 @@ public class ProcessamentoView extends javax.swing.JFrame {
                     templateSize = 3;
                 }
 
-                output = p.servico.median(img, noise, noiseType, templateSize, tamOutput);
+                output = p.servico.median(imagem, noise, noiseType, templateSize, tamOutput);
+                processamento = "Median";
             } else if (jTPProcessamento.getSelectedIndex() == 3) {
                 threshold = jSThLower.getValue();
                 threshold2 = jSThUpper.getValue();
 
-                output = p.servico.thresholding(img, modeType, threshold, threshold2, tamOutput);
+                output = p.servico.thresholding(imagem, modeType, threshold, threshold2, tamOutput);
                 processamento = "Thresholding";
             } else if (jTPProcessamento.getSelectedIndex() == 5) {
 
-                output = p.servico.nomax(img, mode, tamOutput);
+                output = p.servico.nomax(imagem, mode, tamOutput);
                 processamento = "NoMax";
             }
             if (output == null) {
                 JOptionPane.showMessageDialog(null, "Erro! Imagem não Processada. Tente novamente...");
 
             } else {
-                Imagem i = new Imagem();
-                 i.setNome(imagem.getNome()+processamento);
-                 i.setImagem(new ImageIcon(output));
-                 i.setUsuario(p.getUsuario().getCod());
-                i.setProcessamento(processamento);
-                p.servico.inserirImagem(i);
+                output.setNome(imagem.getNome() + processamento);
+                output.setUsuario(p.getUsuario().getCod());
+                output.setProcessamento(processamento);
+                p.servico.inserirImagem(output);
                 try {
                     p.updateT();
+                    this.dispose();
+                    JOptionPane.showMessageDialog(null, "Processamento efetuado com Sucesso!");
                 } catch (SQLException ex) {
                     Logger.getLogger(ProcessamentoView.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (RemoteException ex) {
