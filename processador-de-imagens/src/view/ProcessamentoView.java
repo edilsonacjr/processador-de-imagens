@@ -852,7 +852,7 @@ public class ProcessamentoView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erro! Imagem não Processada. Tente novamente...");
 
             } else {
-                output.setNome(imagem.getNome() + processamento);
+                output.setNome(processamento+imagem.getNome());
                 output.setUsuario(p.getUsuario().getCod());
                 output.setProcessamento(processamento);
                 p.servico.inserirImagem(output);
