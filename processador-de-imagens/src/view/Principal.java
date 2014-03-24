@@ -331,7 +331,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtRemoverActionPerformed
 
     private void jbtProcessarTodasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtProcessarTodasActionPerformed
-        // TODO add your handling code here:
+        try {
+            new ProcessamentoLoteView(this, this.servico.getImagens(usuario.getCod())).setVisible(true);
+        } catch (Exception ex) {
+
+        }
     }//GEN-LAST:event_jbtProcessarTodasActionPerformed
 
     private void jbtExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportarActionPerformed
