@@ -121,7 +121,7 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         return u;
     }
 
-    public Image averaging(Image image, int noise, String noiseMode, int templateSize, int tamOutput) {
+    public Image averaging(Image image, int noise, String noiseMode, int templateSize, int tamOutput) throws  RemoteException{
         int orig[] = null;
         int width = 0, height = 0;
         width = image.getWidth(null);
@@ -154,7 +154,7 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         return output;
     }
 
-    public Image fourier(Image image, Boolean lowpass, int radius, int tamOutput) {
+    public Image fourier(Image image, Boolean lowpass, int radius, int tamOutput) throws RemoteException{
         int orig[] = null;
         float origFloat[] = null;
         FFT fft = new FFT();
@@ -194,7 +194,7 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         return invFourier;
     }
 
-    public Image gaussian(Image image, String noiseMode, int noise, int radius, int sigma, int tamOutput) {
+    public Image gaussian(Image image, String noiseMode, int noise, int radius, int sigma, int tamOutput) throws RemoteException{
         int orig[] = null;
         int width = image.getWidth(null);
         int height = image.getHeight(null);
@@ -229,7 +229,7 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         return output;
     }
 
-    public Image median(Image image, int noise, String noiseMode, int templateSize, int tamOutput) {
+    public Image median(Image image, int noise, String noiseMode, int templateSize, int tamOutput) throws RemoteException{
         int orig[] = null;
         int width = 0, height = 0;
         width = image.getWidth(null);
@@ -273,7 +273,7 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         return original;
     }
 
-    public Image thresholding(Image image, int mode, int threshold, int threshold2, int tamOutput) {
+    public Image thresholding(Image image, int mode, int threshold, int threshold2, int tamOutput) throws RemoteException{
         int orig[] = null;
         int width = 0, height = 0;
         width = image.getWidth(null);
@@ -306,7 +306,7 @@ public class InterfaceRmiImp extends UnicastRemoteObject implements InterfaceRmi
         return output;
     }
 
-    public Image nomax(Image image, int mode, int tamOutput) {
+    public Image nomax(Image image, int mode, int tamOutput) throws RemoteException {
         int orig[] = null;
         int width = 0, height = 0;
         width = image.getWidth(null);

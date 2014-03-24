@@ -41,9 +41,7 @@ public class Principal extends javax.swing.JFrame {
     private static Registry r;
     public static InterfaceRmi servico;
 
-    public static Usuario getUsuario() {
-        return usuario;
-    }
+    
 
     public static void setUsuario(Usuario usuario) {
         Principal.usuario = usuario;
@@ -153,6 +151,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jbtProcessarTodas.setText("Processar Todas as Imagens");
+        jbtProcessarTodas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtProcessarTodasActionPerformed(evt);
+            }
+        });
 
         jbtRemover.setText("Remover Imagem");
         jbtRemover.addActionListener(new java.awt.event.ActionListener() {
@@ -315,6 +318,13 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbtRemoverActionPerformed
 
+    private void jbtProcessarTodasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtProcessarTodasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtProcessarTodasActionPerformed
+
+      public Usuario getUsuario(){
+          return usuario;
+      }
     /**
      * @param args the command line arguments
      */
