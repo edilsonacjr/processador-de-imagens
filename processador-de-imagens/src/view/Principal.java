@@ -313,7 +313,9 @@ public class Principal extends javax.swing.JFrame {
 
         try {
             Imagem i = this.servico.getImagem(Integer.valueOf((String) jtbImagens.getValueAt(jtbImagens.getSelectedRow(), 0)));
-            new ProcessamentoView(this, i).setVisible(true);
+            ArrayList<Imagem> imagens = new ArrayList<Imagem>();
+            imagens.add(i);
+            new ProcessamentoView(this, imagens).setVisible(true);
         } catch (Exception ex) {
 
         }
@@ -332,7 +334,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jbtProcessarTodasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtProcessarTodasActionPerformed
         try {
-            new ProcessamentoLoteView(this, this.servico.getImagens(usuario.getCod())).setVisible(true);
+            new ProcessamentoView(this, this.servico.getImagens(usuario.getCod())).setVisible(true);
         } catch (Exception ex) {
 
         }
