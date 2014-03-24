@@ -54,7 +54,6 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         this.setEnabled(false);
-        new Login(this).setVisible(true);
         try {
             r = LocateRegistry.getRegistry("127.0.0.1", 1100);
             servico = (InterfaceRmi) r.lookup("rmi");
@@ -63,6 +62,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (NotBoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        new Login(this).setVisible(true);
     }
 
     public void updateT() throws SQLException, RemoteException {
