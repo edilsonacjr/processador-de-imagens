@@ -335,18 +335,32 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtProcessarTodasActionPerformed
 
     private void jbtExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportarActionPerformed
+        File fileName;
+        JFileChooser dialogo = new JFileChooser();
+        dialogo.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = dialogo.showOpenDialog(this);
+        if (result == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
 
+        fileName = dialogo.getSelectedFile();
+
+        if (fileName == null || fileName.getName().equals("")) {
+            JOptionPane.showMessageDialog(this, "Diretório Inválido",
+                    "Diretório Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Imagem i;
         try {
             i = this.servico.getImagem(Integer.valueOf((String) jtbImagens.getValueAt(jtbImagens.getSelectedRow(), 0)));
             Image img = i.getImagem().getImage();
 
-            BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_4BYTE_ABGR);
+            BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
 
             Graphics2D g2 = bi.createGraphics();
             g2.drawImage(img, 0, 0, null);
             g2.dispose();
-            ImageIO.write(bi, i.getNome().substring(i.getNome().indexOf(".") + 1), new File(i.getNome()));
+            ImageIO.write(bi, i.getNome().substring(i.getNome().indexOf(".") + 1), new File(fileName+"/"+i.getNome()));
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
