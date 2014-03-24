@@ -84,6 +84,7 @@
                   <Component id="jbtVisualizar" max="32767" attributes="0"/>
                   <Component id="jbtProcessarTodas" max="32767" attributes="0"/>
                   <Component id="jbtRemover" max="32767" attributes="0"/>
+                  <Component id="jbtExportar" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -105,6 +106,8 @@
                       <Component id="jbtProcessarTodas" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jbtRemover" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jbtExportar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -183,6 +186,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtRemoverActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbtExportar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Exportar Imagem"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtExportarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

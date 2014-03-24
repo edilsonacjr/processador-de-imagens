@@ -9,9 +9,12 @@ import entidades.Imagem;
 import entidades.Usuario;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -40,8 +43,6 @@ public class Principal extends javax.swing.JFrame {
     private static Usuario usuario;
     private static Registry r;
     public static InterfaceRmi servico;
-
-    
 
     public static void setUsuario(Usuario usuario) {
         Principal.usuario = usuario;
@@ -99,6 +100,7 @@ public class Principal extends javax.swing.JFrame {
         jbtVisualizar = new javax.swing.JButton();
         jbtProcessarTodas = new javax.swing.JButton();
         jbtRemover = new javax.swing.JButton();
+        jbtExportar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -164,6 +166,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jbtExportar.setText("Exportar Imagem");
+        jbtExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExportarActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Arquivo");
 
         jMenuItem2.setText("Importar Imagens");
@@ -205,7 +214,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jbtProcessar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtProcessarTodas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbtRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jbtRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtExportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -223,7 +233,9 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jbtProcessarTodas)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtRemover)))
+                        .addComponent(jbtRemover)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtExportar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbtSair)
                 .addContainerGap())
@@ -322,9 +334,28 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtProcessarTodasActionPerformed
 
-      public Usuario getUsuario(){
-          return usuario;
-      }
+    private void jbtExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportarActionPerformed
+
+        Imagem i;
+        try {
+            i = this.servico.getImagem(Integer.valueOf((String) jtbImagens.getValueAt(jtbImagens.getSelectedRow(), 0)));
+            Image img = i.getImagem().getImage();
+
+            BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_4BYTE_ABGR);
+
+            Graphics2D g2 = bi.createGraphics();
+            g2.drawImage(img, 0, 0, null);
+            g2.dispose();
+            ImageIO.write(bi, i.getNome().substring(i.getNome().indexOf(".") + 1), new File(i.getNome()));
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbtExportarActionPerformed
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -370,6 +401,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbtExportar;
     private javax.swing.JButton jbtImportar;
     private javax.swing.JButton jbtProcessar;
     private javax.swing.JButton jbtProcessarTodas;
