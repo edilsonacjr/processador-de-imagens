@@ -1,4 +1,4 @@
-processador-de-imagens
+Distributed Image Processing System (in Java RMI)
 ======================
 
-Um processador de imagens em Java, utilizando-se do paradigma cliente-servidor com Java RMI.
+A distributed image processing system in Java, the system uses the client-server model and it is implemented using Java RMI.
